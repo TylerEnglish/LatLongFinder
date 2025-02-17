@@ -40,6 +40,7 @@ def find_address_column(df):
             avg_length = non_null_values.map(lambda x: len(x) if isinstance(x, str) else 0).mean()
             if avg_length < 10 or avg_length > 150:
                 score -= 2  
+
         if score > best_score:
             best_score = score
             best_col = col
@@ -98,7 +99,7 @@ if uploaded_file is not None:
                     st.error(f"Error geocoding address '{addr}': {e}")
                     latitudes.append("missing information")
                     longitudes.append("missing information")
-
+            
             # Populate the DataFrame with new Latitude and Longitude columns
             df['Latitude'] = latitudes
             df['Longitude'] = longitudes
