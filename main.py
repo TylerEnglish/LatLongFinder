@@ -20,21 +20,21 @@ def find_address_column(df):
         r".*plaza.*": 1,
         r".*avenue.*": 2
     }
-    
+
     best_score = 0
     best_col = None
-    
+
     for col in df.columns:
         if df[col].dtype != 'object':
             continue
-        
+
         score = 0
         col_lower = col.lower()
         # Add weights from regex pattern matches
         for pattern, weight in patterns.items():
             if re.search(pattern, col_lower):
                 score += weight
-        
+
         non_null_values = df[col].dropna()
         if not non_null_values.empty:
             avg_length = non_null_values.map(lambda x: len(x) if isinstance(x, str) else 0).mean()
@@ -60,12 +60,12 @@ if uploaded_file is not None:
     st.write(df.head())
 
     address_column = find_address_column(df)
-    
+
     if not address_column:
         st.error("No suitable column containing address information was found. Please check your file or rename the columns accordingly.")
     else:
         st.write(f"**Detected address column:** `{address_column}`")
-        
+
         # Optional: Let the user override the detected column if needed
         manual_col = st.selectbox("If the detected address column is not correct, select the correct one:", options=[address_column] + [col for col in df.columns if col != address_column])
         if manual_col:
@@ -99,7 +99,7 @@ if uploaded_file is not None:
                     st.error(f"Error geocoding address '{addr}': {e}")
                     latitudes.append("missing information")
                     longitudes.append("missing information")
-            
+
             # Populate the DataFrame with new Latitude and Longitude columns
             df['Latitude'] = latitudes
             df['Longitude'] = longitudes
