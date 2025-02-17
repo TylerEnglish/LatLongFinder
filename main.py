@@ -40,7 +40,6 @@ def find_address_column(df):
             avg_length = non_null_values.map(lambda x: len(x) if isinstance(x, str) else 0).mean()
             if avg_length < 10 or avg_length > 150:
                 score -= 2  
-
         if score > best_score:
             best_score = score
             best_col = col
