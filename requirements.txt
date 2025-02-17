@@ -1,7 +1,3 @@
 streamlit
-pandas
-pyarrow
-numpy
-matplotlib
-seaborn
-python-dotenv 
+pandas 
+geopy
